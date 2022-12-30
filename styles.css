@@ -1,0 +1,63 @@
+@import url("https://fonts.googleapis.com/css2?family=Gothic+A1:wght@500&family=Lato:wght@400;700&family=Roboto:wght@300;400;500;700;900&display=swap");
+
+body {
+    margin: 0;
+    font-family: "Lato", sans-serif;
+}
+
+canvas {
+    position: absolute;
+    margin: 0;
+}
+
+#menu {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    padding-bottom: 21px;
+    background-color: rgba(240, 248, 255, 0.026);
+    backdrop-filter: blur(3px);
+    border-right: 2px solid rgb(226, 226, 226);
+    border-bottom: 2px solid rgb(226, 226, 226);
+    border-bottom-right-radius: 8px;
+}
+
+#functions-container {
+    box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.19);
+    width: 100%;
+    background-color: white;
+}
+#functions-container > div {
+    background-color: transparent;
+}
+
+.function-parent {
+    display: flex;
+    padding: 15px 10px;
+    border-bottom: 1px solid rgb(202, 200, 200);
+}
+
+.func-parent-delete-btn {
+    margin-left: 16px;
+    margin-right: 6px;
+    margin-top: 2px;
+    cursor: pointer;
+}
+
+#add-function-box-btn {
+    margin-right: 10px;
+    text-align: right;
+    cursor: pointer;
+    border: 1px solid rgb(150, 150, 150);
+    padding: 3px 10px;
+    width: fit-content;
+    border-radius: 4px;
+    margin-top: 15px;
+    margin-left: 10px;
+    box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.063);
+    transition: box-shadow 300ms ease-out;
+}
+
+#add-function-box-btn:hover {
+    box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.277);
+}
