@@ -71,44 +71,21 @@ function setFunctionExpression(func, funcInput) {
     func.function = mathFunction;
 }
 
-function convertToJavascriptFunction(functionStr) {
-    let parenthesisIndexes = getAllIndexes("(", functionStr);
-    if (parenthesisIndexes[0] != -1)
-        parenthesisIndexes.forEach((parenthesisIndex, index) => {
-            let lastParenthesisIndex =
-                getAllIndexes(")", functionStr)[index - 1] || 0;
-            let functionExpression = getFunctionGoingDownFromParenthesis(
-                functionStr,
-                parenthesisIndex,
-                lastParenthesisIndex
-            );
-            functionStr = functionStr.replace(
-                functionExpression,
-                `Math.${functionExpression}`
-            );
-        });
+let MathMethods = [];
 
-    return eval(`(x)=>${functionStr}`);
+let MathObj = Object.getOwnPropertyNames(Math);
+for (let method in MathObj) {
+    MathMethods.push(MathObj[method]);
 }
 
-function getFunctionGoingDownFromParenthesis(
-    functionStr,
-    parenthesisIndex,
-    lastParenthesisIndex
-) {
-    let wordSeparators = [" ", "*", ".", "/", "-", "+"];
-    let wordSeparatorsIndexes = [];
-
-    functionStr = functionStr.substring(lastParenthesisIndex);
-
-    wordSeparators.forEach((wordSeparator) =>
-        wordSeparatorsIndexes.push(functionStr.indexOf(wordSeparator))
+function convertToJavascriptFunction(functionStr) {
+    MathMethods.forEach(
+        (method) =>
+            (functionStr = functionStr.replaceAll(method, `Math.${method}`))
     );
-    let fisrtWordSeparatorIndex = wordSeparators.sort(
-        (a, b) => a.length - b.length
-    )[0];
-    let func = functionStr.substring(fisrtWordSeparatorIndex, parenthesisIndex);
-    return func;
+
+    console.log(`(x)=>${functionStr}`);
+    return eval(`(x)=>${functionStr}`);
 }
 
 createFunctionBox({
