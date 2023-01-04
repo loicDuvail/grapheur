@@ -84,8 +84,57 @@ function convertToJavascriptFunction(functionStr) {
             (functionStr = functionStr.replaceAll(method, `Math.${method}`))
     );
 
+    if (functionStr.includes("sum")) functionStr = addSumNotation(functionStr);
+
     console.log(`(x)=>${functionStr}`);
     return eval(`(x)=>${functionStr}`);
+}
+
+function addSumNotation(functionStr) {
+    let argumentsStrStart =
+        functionStr.indexOf("(", functionStr.indexOf("sum")) + 1;
+
+    let argumentsStrEnd = getArgumentsStrEnd(argumentsStrStart, functionStr);
+
+    let argumentsStr = functionStr.substring(
+        argumentsStrStart,
+        argumentsStrEnd
+    );
+
+    let arguments = argumentsStr.split(",");
+
+    console.log(arguments);
+
+    const [i, n, func] = arguments;
+
+    let str = `{let y = 0;
+    for(let i = ${i};i < ${n};i++){
+        y += ${func}
+    };
+    return y}`;
+
+    console.log(str);
+
+    return str;
+}
+
+function getArgumentsStrEnd(argStrStart, functionStr) {
+    let startParenthesisCount = 1;
+    let endParenthesisCount = 0;
+
+    for (
+        let charIndex = argStrStart;
+        charIndex < functionStr.length;
+        charIndex++
+    ) {
+        let char = functionStr[charIndex];
+        if (char == ")") endParenthesisCount++;
+        if (char == "(") startParenthesisCount++;
+
+        console.log(startParenthesisCount);
+
+        if (endParenthesisCount >= startParenthesisCount) return charIndex;
+    }
 }
 
 createFunctionBox({
